@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-module
+  type="WEB"
+  name="cn.zucc.test"
+  id="myeclipse.1448505245953"
+  context-root="/cn.zucc.test"
+  j2ee-spec="5.0"
+  archive="cn.zucc.test.war">
+  <attributes>
+    <attribute name="webrootdir" value="WebRoot" />
+  </attributes>
+</project-module>
+

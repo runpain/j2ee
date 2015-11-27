@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+	<!--namspace命名空间，作用是对sql进行分类管理，sql隔离  -->
+
+<mapper namespace="cn.zucc.dao.UserMap">
+
+
+
+	<select id="findUserById" parameterType="int" resultType="cn.zucc.entity.User">
+		select
+		* from user where id = #{id}
+	</select>
+
+
+	<delete id="deleteUser" parameterType="int">
+		delete from user where id = #{id}
+		</delete>
+
+	
+
+</mapper>
+
+

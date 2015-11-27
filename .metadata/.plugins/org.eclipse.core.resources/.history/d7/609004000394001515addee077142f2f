@@ -1,0 +1,6 @@
+package cn.zucc.dao;
+
+public interface User {
+
+	public void deleteUser();
+}

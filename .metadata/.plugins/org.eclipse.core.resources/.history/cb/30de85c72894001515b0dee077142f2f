@@ -1,0 +1,18 @@
+package cn.zucc.dao;
+
+import java.util.List;
+
+import cn.zucc.entity.User;
+
+public interface UserMap {
+	public void addUser(User user);
+
+	public void deleteUser(Integer id);
+	
+	public User findUserById(Integer id);
+	
+	public void updateUser(User user);
+	
+	public List<User> findUserByIds(List<Integer>ids );
+	
+}

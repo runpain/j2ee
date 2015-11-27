@@ -1,0 +1,16 @@
+package cn.zucc.dao;
+
+import cn.zucc.entity.User;
+
+public interface UserMap {
+
+	public void deleteUser(Integer id);
+	
+	public void addUser(User user);
+	
+	public void findUserById(Integer id);
+	
+	public void updateUser(User user);
+	
+	
+}

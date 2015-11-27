@@ -1,0 +1,118 @@
+package cn.zucc.test;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.ibatis.io.Resources;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
+import cn.zucc.dao.UserMap;
+import cn.zucc.entity.User;
+
+
+public class test {
+	
+	SqlSession sqlSession = null;
+	
+	@Before
+	public void setup() throws IOException{
+		// mybatis配置文件
+		String resource = "config.xml";
+		// 得到配置文件流
+		InputStream is = Resources.getResourceAsStream(resource);
+		// 创建会话工厂，传入mybatis的配置文件信息
+		SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder()
+				.build(is);
+		// 通过工厂得到SqlSession
+		sqlSession = sqlSessionFactory.openSession();
+		// 通过SqlSession操作数据库
+		// 第一个参数：映射文件中statement的id,等于"namespace.statment的id"
+		// 第二个参数：指定和映射文件中所匹配的parameterType类型的参数
+		// SqlSession.selectOne结果是与映射文件中所匹配的resultType类型的对 象	
+	}
+	
+	@After
+	public void gameover(){
+		sqlSession.close();
+		
+	}
+	@Test
+	public void find() throws IOException {		
+		User user = sqlSession.selectOne("cn.zucc.dao.UserMap.findUserById", 1);
+		System.out.println(user);	
+	}
+		
+	@Test
+	public void adduser() throws IOException {
+		User user = new User();	
+		user.setName("sdas@qq.com");
+		user.setRealName("李四");
+		user.setPassword("1233");
+		user.setTelphone("13123213");
+		user = sqlSession.selectOne("cn.zucc.dao.UserMap.insertUser",user);
+		sqlSession.commit();
+	}
+	
+	@Test
+	public void addUser() throws IOException {
+		User user = new User("你","好","色","彩");	
+		UserMap userMap = sqlSession.getMapper(UserMap.class);
+		userMap.addUser(user);
+		sqlSession.commit();
+	}
+//***********接口映射删除*************
+	@Test
+	public void userDelete(){
+		UserMap user = sqlSession.getMapper(UserMap.class);
+		user.deleteUser(2);
+		sqlSession.commit();		
+	}
+	
+	@Test
+	public void updateUser1(){
+		User user = new User();	
+		user.setName("haxi");
+		user.setId(4);
+		user = sqlSession.selectOne("cn.zucc.dao.UserMap.updateUser",user);
+		sqlSession.commit();
+	}
+//***********接口映射更新*************
+	@Test
+	public void updateUser(){
+		UserMap userMap = sqlSession.getMapper(UserMap.class);
+
+		User user = new User();
+		user.setId(4);
+		user.setRealName("厂长的内裤");
+		userMap.updateUser(user);
+		sqlSession.commit();
+		
+	}
+	
+	@Test
+	public void findUserByIds(){
+		UserMap userMap = sqlSession.getMapper(UserMap.class);
+		List<Integer>ids = new ArrayList<Integer>();
+		ids.add(1);
+		ids.add(3);
+		ids.add(5);
+		List<User> users = userMap.findUserByIds(ids);
+
+		for(User user1:users){
+			sqlSession.commit();
+		System.out.println(user1);
+			
+		}
+	}
+
+	
+	
+	
+}

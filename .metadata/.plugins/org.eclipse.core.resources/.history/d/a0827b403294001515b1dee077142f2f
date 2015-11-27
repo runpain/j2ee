@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+  PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+  "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+<!--  <classPathEntry location="/Program Files/IBM/SQLLIB/java/db2java.zip" />-->
+
+	
+
+  <context id="DB2Tables" targetRuntime="MyBatis3">
+  	<!-- 序列化插件 -->
+  	<plugin type="org.mybatis.generator.plugins.SerializablePlugin" /> 
+  	<plugin type="org.zucc.generat.PaginationPlugin" />   
+  	
+  	<commentGenerator>
+  		<!-- 是否取消注释 -->
+  		<property name="suppressAllComments" value="true"/>
+  	</commentGenerator>
+  	
+    <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+        connectionURL="jdbc:mysql:///house"
+        userId="root"
+        password="root">
+    </jdbcConnection>
+
+    <javaTypeResolver >
+      <property name="forceBigDecimals" value="false" />
+    </javaTypeResolver>
+	<!-- 生成实体类 -->
+    <javaModelGenerator targetPackage="org.entity" targetProject=".\src">
+    	<!-- 是否让shcema作为包的后缀 -->
+      <property name="enableSubPackages" value="false" />
+      <property name="trimStrings" value="true" />
+    </javaModelGenerator>
+	<!-- mapper接口的位置 -->
+    <sqlMapGenerator targetPackage="org.dao"  targetProject=".\src">
+    	<!-- 是否让shcema作为包的后缀 -->
+      <property name="enableSubPackages" value="false" />
+    </sqlMapGenerator>
+
+    <javaClientGenerator type="XMLMAPPER" targetPackage="org.dao"  targetProject=".\src">
+      <property name="enableSubPackages" value="false" />
+    </javaClientGenerator>
+
+    <table tableName="user" />
+<!--    <table tableName="permission" />-->
+<!--    <table tableName="role" />-->
+<!--    <table tableName="admin_role" />-->
+<!--	<table tableName="user"-->
+<!--    enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"-->
+<!--    enableSelectByExample="false" selectByExampleQueryId="false" >-->
+<!--    <property name="useActualColumnNames" value="true"/>-->
+<!--    </table>-->
+<!--    <table tableName="district"-->
+<!--    enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"-->
+<!--    enableSelectByExample="false" selectByExampleQueryId="false" >-->
+<!--    <property name="useActualColumnNames" value="true"/>-->
+<!--    </table>-->
+<!--    <table tableName="street"-->
+<!--    enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"-->
+<!--    enableSelectByExample="false" selectByExampleQueryId="false" >-->
+<!--    <property name="useActualColumnNames" value="true"/>-->
+<!--    </table>-->
+<!--    <table tableName="type"-->
+<!--    enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"-->
+<!--    enableSelectByExample="false" selectByExampleQueryId="false" >-->
+<!--    <property name="useActualColumnNames" value="true"/>-->
+<!--    </table>-->
+<!--    <table tableName="house"-->
+<!--    enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"-->
+<!--    enableSelectByExample="false" selectByExampleQueryId="false" >-->
+<!--    <property name="useActualColumnNames" value="true"/>-->
+<!--    </table>-->
+
+  </context>
+</generatorConfiguration>

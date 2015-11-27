@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+	<!--namspace命名空间，作用是对sql进行分类管理，sql隔离  -->
+
+<mapper namespace="cn.zucc.dao.UserMap">
+
+
+
+	<select id="findUserById" parameterType="int" resultType="cn.zucc.entity.User">
+		select * from user where id = #{id}
+	</select>
+
+
+	<delete id="deleteUser" parameterType="int">
+		delete from user where id = #{id}
+	</delete>
+	
+	<insert id="insertUser" parameterType="cn.zucc.entity.User">  
+        insert into User(name, password, telphone, realName)  
+        values(#{name}, #{password}, #{telphone}, #{realName})  
+	</insert>  
+	
+	<insert id="addUser" parameterType="cn.zucc.entity.User">  
+        insert into User(name, password, telphone, realName)  
+        values(#{name}, #{password}, #{telphone}, #{realName})  
+	</insert>
+
+	<update id="updateUser" parameterType="cn.zucc.entity.User">
+		update User
+		<set>
+			<if test="name != null">
+				name = #{name},
+			</if>
+			<if test="password != null">
+				password = #{password},
+			</if>
+			<if test="telphone != null">
+				telphone = #{telphone},
+			</if>
+			<if test="realName != null">
+				realName = #{realName},
+			</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<select id="findUserByIds" parameterType="List" resultType="User">
+		select  * from user where 
+		<foreach collection="list" item="id" separator=",">
+		
+			id=#{id}
+		</foreach>
+	</select>
+	
+
+</mapper>
+
+

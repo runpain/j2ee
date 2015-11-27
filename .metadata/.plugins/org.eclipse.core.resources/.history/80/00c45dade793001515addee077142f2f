@@ -1,0 +1,5 @@
+package cn.zucc.entity;
+
+public class User {
+
+}

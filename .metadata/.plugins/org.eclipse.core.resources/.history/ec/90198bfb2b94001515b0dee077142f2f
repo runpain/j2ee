@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+	<!--namspace命名空间，作用是对sql进行分类管理，sql隔离  -->
+
+<mapper namespace="cn.zucc.dao.UserMap">
+
+<resultMap type="User" id="base">
+<id column="user_id" property="id" />
+<result column="user_name" property="name"/>
+<result column="user_password" property="password"/>
+
+</resultMap>
+
+	<select id="findUserById" parameterType="int" resultMap="base">
+		select * from user where user_id = #{id}
+	</select>
+
+
+	<delete id="deleteUser" parameterType="int">
+		delete from user where user_id = #{id}
+	</delete>
+	
+	<insert id="insertUser" parameterType="User">  
+        insert into User(user_name, user_password, telphone, realName)  
+        values(#{name}, #{password}, #{telphone}, #{realName})  
+	</insert>  
+	
+	<insert id="addUser" parameterType="User">  
+        insert into User(user_name, user_password, telphone, realName)  
+        values(#{name}, #{password}, #{telphone}, #{realName})  
+	</insert>
+
+	<update id="updateUser" parameterType="User">
+		update User
+		<set>
+			<if test="user_name != null">
+				name = #{name},
+			</if>
+			<if test="user_password != null">
+				user_password = #{password},
+			</if>
+			<if test="telphone != null">
+				telphone = #{telphone},
+			</if>
+			<if test="realName != null">
+				realName = #{realName},
+			</if>
+		</set>
+		where id = #{user_id}
+	</update>
+	
+	<select id="findUserByIds" parameterType="int" resultType="User">
+		select  * from user where 
+		<foreach collection="list" item="user_id" open="user_id in(" close=")" separator=",">
+			#{id}
+		</foreach>
+	</select>
+
+	
+
+</mapper>
+
+

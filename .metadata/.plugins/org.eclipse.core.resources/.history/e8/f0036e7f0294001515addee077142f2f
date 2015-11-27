@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+	<!--namspace命名空间，作用是对sql进行分类管理，sql隔离  -->
+
+<mapper namespace="UserMapper">
+
+	<!-- 在映射文件中可以配置很多sql语句 -->
+	<!-- 通过select标签执行数据库查询，id是标识映射文件中的sql，parameterType是指定输入参数的类型，这里是Int -->
+	<!-- #{}相当于jdbc中的占位符，名字随意 -->
+	<!--
+		resultType是指定sql输出结果所映射的java对象类型，select指定resultType表示将单条记录映射成java对象
+	-->
+
+	<select id="findUserById" parameterType="int" resultType="cn.zucc.entity.User">
+		select
+		* from user where id = #{id}
+	</select>
+
+
+	<!--
+		根据用户名称模糊查询用户信息，可能返回多条 resultType:指定就是单条记录所映射的java对象类型
+		${}:表示拼接sql串，将接收到参数的内容不加任何修饰拼接在sql中。 使用${}拼接sql,会引起sql注入
+		${value}:接收输入参数的内容，如果传入类型是简单类型，${}中只能使用value
+	-->
+
+	<select id="findUserByName" parameterType="java.lang.String"
+		resultType="cn.zucc.entity.User">
+		select * from user where realName like '%${value}%'
+	</select>
+
+
+	<!-- 添加用户
+		#{}中指定pojo的属性名，接收到pojo对象的属性值，mybatis通过ognl获取对象的属性值
+	 -->
+	<insert id="insertUser" parameterType="cn.zucc.entity.User">
+		insert into User(name, password, telephone, realName)
+		values(#{name}, #{password}, #{telephone}, #{realName})  
+	</insert>
+
+	<!-- 添加用户
+		#{}中指定pojo的属性名，接收到pojo对象的属性值，mybatis通过ognl获取对象的属性值
+	 -->
+	<insert id="insertUser" parameterType="cn.zucc.entity.User">
+		<!--
+			将插入数据的主键返回到user对象中 keyProperty:将查询到主键值设置到parameterType指定的对象的那个属性
+			order:SELECT LAST_INSERT_ID()执行顺序，相对于insert语句来说它的执行顺序
+			resultType:指定SELECT LAST_INSERT_ID()的结果类型
+		-->
+		<selectKey keyProperty="id" order="AFTER" resultType="int">
+			SELECT
+			LAST_INSERT_ID()
+		</selectKey>
+		insert into user(name, password, telephone, realName)
+		values(#{name}, #{password}, #{telephone}, #{userName})
+	</insert>
+
+	<delete id="deleteUser" parameterType="java.lang.Integer">
+		delete from user where id = #{id}
+		</delete>
+
+	<update id="updateUser" parameterType="cn.zucc.entity.User">
+		update user
+		<set>
+			<if test="name != null">
+				name = #{name},
+			</if>
+			<if test="password != null">
+				password = #{password},
+			</if>
+			<if test="telphone != null">
+				telephone = #{telephone},
+			</if>
+			<if test="realName != null">
+				realName = #{realName},
+			</if>
+		</set>
+		where id = #{id}
+	</update>
+
+</mapper>
+
+

@@ -1,0 +1,8 @@
+package cn.zucc.dao;
+
+public interface UserMap {
+
+	public void deleteUser(Integer id);
+	
+	
+}
